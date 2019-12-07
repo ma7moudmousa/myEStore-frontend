@@ -1,0 +1,6 @@
+<app-nav></app-nav>
+<hr>
+<app-navadmin *ngIf="isAdmin.currentUser()?.isadmin"></app-navadmin>
+<router-outlet>
+
+</router-outlet>

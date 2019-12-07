@@ -1,0 +1,8 @@
+<ul class="nav nav-pills" style="margin-top: 5px;">
+    <li role="presentation" class="active"><a routerLink="/">Home</a></li>
+    <li role="presentation" *ngIf="!auth.islogedIn()"><a routerLink="/login">LogIn</a></li>
+    <li role="presentation" *ngIf="!auth.islogedIn()"><a routerLink="/signup">SignUp</a></li>
+    <li role="presentation" *ngIf="auth.islogedIn()"><a routerLink="/profile">Profile</a></li>
+    <li role="presentation" *ngIf="auth.islogedIn()" (click)="logOut()" style="cursor: pointer;"><a>LogOut</a></li>
+    <!-- <li role="presentation" *ngIf="auth.islogedIn()&&auth.currentUser().isadmin"><a routerLink="/admin">Admin</a></li> -->
+</ul>

@@ -1,0 +1,137 @@
+<button class="btn btn-success" *ngIf="user.currentUser()?.isadmin &&!id"
+    (click)="change();already=false">creat_Product</button>
+<div class="bg-model" *ngIf="already">
+    <div class="model-content">
+        <div class="close" (click)="alreadyfun();changed=false">+</div>
+        <div style=" margin: 70px auto;font-size: x-large;">this product name is already exist</div>
+    </div>
+</div>
+<!--                        start of creating form                          -->
+<div class="bg-model" *ngIf="changed">
+    <div class="model-content">
+        <div class="close" (click)="change()">+</div>
+        <form #f="ngForm" (ngSubmit)="create(f.value)">
+            <input type="text" name="name" #name="ngModel" ngModel placeholder="enter name" class="form-control"
+                required>
+            <input type="text" name="desc" #desc="ngModel" ngModel placeholder="enter descption" class="form-control"
+                required>
+            <input type="text" name="price" #price="ngModel" ngModel placeholder="enter price" class="form-control"
+                required>
+            <input type="text" name="rating" #rating="ngModel" ngModel placeholder="enter rating from 1 to 10"
+                class="form-control" required>
+            <label for="fileInput" style="background-color: chocolate;" class="btn btn-secondary">
+                add Image
+            </label>
+            <input required type="file" name="image" #image="ngModel" style="display: none;" ngModel
+                (change)="fileProgress($event)" id="fileInput" />
+            <div class="form-group" style="margin-top: 13px;">
+                <label>subCate_Name:</label>
+                <select required ngModel name="subcategory" #subcategory="ngModel">
+                    <option *ngFor="let sub of subCategories" [value]="sub._id">{{sub.name}}</option>
+                </select>
+            </div>
+            <input type="submit" value="create" class="btn btn-primary" [disabled]="f.invalid">
+        </form>
+    </div>
+</div>
+<!--                        end of creating form                          -->
+<div class="bg-model" *ngIf="changed1">
+    <div class="model-content">
+        <div class="close" (click)="changedfun1()">+</div>
+        <form #f="ngForm" (ngSubmit)="edit(f.value)">
+            <input type="text" name="name" #name="ngModel" [ngModel]="product.name" class="form-control" required>
+            <input type="text" name="desc" #desc="ngModel" [ngModel]="product.desc" class="form-control" required>
+            <input type="text" name="price" #price="ngModel" [ngModel]="product.price" class="form-control" required>
+            <input type="text" name="rating" #rating="ngModel" [ngModel]="product.rating" class="form-control" required>
+            <label for="fileInput" style="background-color: chocolate;" class="btn btn-secondary">
+                add Image
+            </label>
+            <input type="file" name="image" #image="ngModel" ngModel (change)="fileProgress($event)"
+                style="display: none;" id="fileInput" />
+            <div class="form-group" style="margin-top: 13px;">
+                <label>subCate_Name:</label>
+                <select required [ngModel]="product.subcategory._id" name="subcategory" #subcategory="ngModel">
+                    <option *ngFor="let sub of subCategories" [value]="sub._id">{{sub.name}} </option>
+                </select>
+            </div>
+            <input type="submit" value="edit" class="btn btn-primary" [disabled]="f.invalid">
+        </form>
+    </div>
+</div>
+<!-- <div class="row">
+    <input id="search" #search class="form-control mr-sm-2" (keyup)="onkeyup(search.value)" type="search"
+        placeholder="Search" aria-label="Search">
+</div> -->
+<div class="row" *ngIf="!id">
+    <div *ngFor="let product of products">
+        <div class="card col-lg-4"
+            style="border: rgba(228, 18, 200, 0.158) solid 0.5px;height: 400px;width: 30%;margin: 10px;">
+            <img src="{{product.image}}" class="card-img-top" alt="..." width="30%" height="100px">
+            <div class="card-body">
+                <p class="card-title"><span style="font-weight:bold;color: rgb(40, 96, 144);">Name:</span>
+                    {{product.name}} </p>
+                <p class="card-text"><span
+                        style="font-weight:bold;color: rgb(40, 96, 144);">Desc:</span>{{product.desc|summery:75}}</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><span style="font-weight:bold;color: rgb(40, 96, 144);">Price:</span>
+                        {{product.price}} </li>
+                    <li class="list-group-item"><span style="font-weight:bold;color: rgb(40, 96, 144);">Rating:</span>
+                        {{product.rating}} </li>
+                    <li class="list-group-item"><span
+                            style="font-weight:bold;color: rgb(40, 96, 144);">subCate_Name:</span>
+                        {{product.subcategory.name}} </li>
+                </ul>
+            </div>
+            <a style="cursor: pointer;text-decoration: none ;">
+                <span *ngIf="user.currentUser()?.isadmin" class="glyphicon glyphicon-edit"
+                    style="color:green; font-size: 35px; float:right;margin: 5px;"
+                    (click)="changedfun1();values(product)">
+                </span>
+                <span *ngIf="user.currentUser()?.isadmin" class="glyphicon glyphicon-remove"
+                    style="color:red; font-size: 35px; float:right;margin: 5px;" (click)="removefun(product)"></span>
+            </a>
+            <a [routerLink]="['/product-details',product._id,product.subcategory._id] " class="btn btn-primary">See
+                More</a>
+        </div>
+    </div>
+
+</div>
+
+
+
+<div class="row" *ngIf="id">
+    <div class="col-lg-3" *ngIf="!user.currentUser()?.isadmin">
+        <app-category></app-category>
+    </div>
+    <div *ngFor="let product of products">
+        <div class="card col-lg-3" *ngIf="product?.subcategory.category==id"
+            style="border: rgba(228, 18, 200, 0.158) solid 0.5px;height: 400px;width: 20%;margin: 10px;">
+            <img src="{{product.image}}" class="card-img-top" alt="..." width="30%" height="100px">
+            <div class="card-body">
+                <p class="card-title"><span style="font-weight:bold;color: rgb(40, 96, 144);">Name:</span>
+                    {{product.name}} </p>
+                <p class="card-text"><span
+                        style="font-weight:bold;color: rgb(40, 96, 144);">Desc:</span>{{product.desc|summery:75}}</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><span style="font-weight:bold;color: rgb(40, 96, 144);">Price:</span>
+                        {{product.price}} </li>
+                    <li class="list-group-item"><span style="font-weight:bold;color: rgb(40, 96, 144);">Rating:</span>
+                        {{product.rating}} </li>
+                    <li class="list-group-item"><span
+                            style="font-weight:bold;color: rgb(40, 96, 144);">subCate_Name:</span>
+                        {{product.subcategory.name}} </li>
+                </ul>
+            </div>
+            <a style="cursor: pointer;text-decoration: none ;">
+                <span *ngIf="user.currentUser()?.isadmin" class="glyphicon glyphicon-edit"
+                    style="color:green; font-size: 35px;float:right;margin: 5px;"
+                    (click)="changedfun1();values(product)">
+                </span>
+                <span *ngIf="user.currentUser()?.isadmin" class="glyphicon glyphicon-remove"
+                    style="color:red; font-size: 35px; float:right;margin: 5px;" (click)="removefun(product)"></span>
+            </a>
+            <a [routerLink]="['/product-details',product._id,product.subcategory._id] " class="btn btn-primary">See
+                More</a>
+        </div>
+    </div>
+</div>

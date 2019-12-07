@@ -1,0 +1,49 @@
+<button class="btn btn-success" *ngIf="user.currentUser()?.isadmin"
+    (click)="change();already=false;cant=false">creatCategory</button>
+<div class="bg-model" *ngIf="already">
+    <div class="model-content">
+        <div class="close" (click)="alreadyfun();changed=false">+</div>
+        <div style=" margin: 70px auto;font-size: x-large;">this category name is already exist
+        </div>
+    </div>
+</div>
+<div class="bg-model" *ngIf="cant">
+    <div class="model-content">
+        <div class="close" (click)=" cantfun()">+</div>
+        <div style=" margin: 70px auto;font-size: x-large;">this category has subs
+        </div>
+    </div>
+</div>
+<div class="bg-model" *ngIf="changed">
+    <div class="model-content">
+        <div class="close" (click)="change()">+</div>
+        <form #f="ngForm" (ngSubmit)="add(f.value)">
+            <input type="text" name="name" #name="ngModel" ngModel placeholder="enter category name"
+                class="form-control" required>
+            <input type="submit" value="add" class="btn btn-primary" [disabled]="f.invalid">
+        </form>
+    </div>
+</div>
+<div class="bg-model" *ngIf="changed1">
+    <div class="model-content">
+        <div class="close" (click)="changedfun1()">+</div>
+        <form #f="ngForm" (ngSubmit)="editfun(f.value)">
+            <input type="text" name="name" #name="ngModel" ngModel placeholder="enter category name"
+                class="form-control" required>
+            <input type="submit" value="edit" class="btn btn-primary" [disabled]="f.invalid">
+        </form>
+    </div>
+</div>
+<ul class="list-group " style="margin: 10px;">
+    <li *ngFor="let category of categories" class="list-group-item">
+        <h2 style="display: inline-block;"><a [routerLink]="['/products',category._id]"> {{category.name}}</a> </h2>
+
+        <span *ngIf="user.currentUser()?.isadmin" class="glyphicon glyphicon-edit"
+            style="color:green; font-size: 35px; cursor: pointer;float:right;margin: 5px;"
+            (click)="changedfun1();id(category)">
+        </span>
+        <span *ngIf="user.currentUser()?.isadmin" class="glyphicon glyphicon-remove"
+            style="color:red; font-size: 35px; cursor: pointer;float:right;margin: 5px;"
+            (click)="removefun(category)"></span>
+    </li>
+</ul>

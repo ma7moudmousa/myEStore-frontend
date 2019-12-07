@@ -1,0 +1,22 @@
+<form #f="ngForm" (ngSubmit)="onsubmit(f.value)">
+    <div class="form-control" style="background: indigo;" *ngIf="wrongEmail">this E-mail is already exit</div>
+    <label>first Name</label>
+    <input required type="text" name="firstName" ngModel #firstName="ngModel" placeholder="enter ur first name"
+        class="form-control">
+    <label>last Name</label>
+    <input required type="text" name="lastName" ngModel #lastName="ngModel" placeholder="enter ur last name"
+        class="form-control">
+    <label>address</label>
+    <input required type="text" name="address" ngModel #address="ngModel" placeholder="enter ur address"
+        class="form-control">
+    <label>E-mail</label>
+    <input required type="email" name="email" ngModel #email="ngModel" placeholder="enter ur email"
+        class="form-control">
+    <label>phone Num</label>
+    <input required type="tel" name="phoneNum" ngModel #phoneNum="ngModel" placeholder="enter ur phoneNum"
+        class="form-control">
+    <label>passWord</label>
+    <input required type="password" name="password" ngModel #password="ngModel" placeholder="enter ur password"
+        class="form-control">
+    <input [disabled]="f.invalid" class="btn btn-info" value="signIn" type="submit">
+</form>

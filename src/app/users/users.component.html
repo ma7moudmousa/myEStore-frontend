@@ -1,0 +1,38 @@
+<form #f="ngForm" (ngSubmit)="edite(f.value)" *ngIf="changed">
+    <div class="radio">
+        <label>
+            <input required type="radio" name="isadmin" value="false" ngModel #isadmin="ngModel">
+            is't admin
+        </label>
+    </div>
+    <div class="radio">
+        <label for="">
+            <input required type="radio" value="true" name="isadmin" #isadmin="ngModel" ngModel>
+            isadmin
+        </label>
+    </div>
+    <input type="submit" value="edite" class="btn btn-primary" [disabled]=" f.invalid ">
+</form>
+
+
+<div class="row">
+    <div class="col-lg-3" *ngFor="let user of allUsers">
+        <div class="card-body"
+            style="border: gray solid 0.5px; margin: auto;width: 300px;height: 250px;display: inline-block;"
+            *ngIf="user?._id!=userAuth.currentUser()?.id">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">firstName: {{user.firstName}} </li>
+                <li class="list-group-item">lastName:{{user.lastName}} </li>
+                <li class="list-group-item">Address: {{user.address}} </li>
+                <li class="list-group-item">Email: {{user.email}} </li>
+                <li class="list-group-item">phoneNumber: {{user.phoneNum}} </li>
+                <li class="list-group-item">isAdmin: {{user.isAdmin}} </li>
+                <span class="glyphicon glyphicon-edit" style="color:green; font-size: 35px; cursor: pointer;"
+                    (click)="changedfun1();values(user)">
+                </span>
+                <span class="glyphicon glyphicon-remove" style="color:red; font-size: 35px; cursor: pointer;"
+                    (click)="removefun(user)"></span>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+.bg-model{
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    z-index:1 ;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.model-content{
+    width: 500px;
+    height: 400px;
+    background-color: white;
+    border-radius: 4px;
+    position: relative;
+    opacity: 1;
+text-align: center; 
+padding: 20px;
+}
+input{
+    margin: 20px  auto;
+}
+.close{
+    position: absolute;
+    top: 0;
+    right: 14px;
+    font-size: 42px;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
+.card:hover{
+    color: rgb(40, 96, 144);
+    font-weight: bold;
+    box-shadow: 3px 7px rgb(40, 96, 144);
+}
+.card{
+    border-radius: 5%;
+}

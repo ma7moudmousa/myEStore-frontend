@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-lg-3" *ngIf="!user.currentUser()?.isadmin">
+        <app-category></app-category>
+    </div>
+    <img src="{{oneproduct?.image}}" class="col-lg-3" alt="product-image" width="100%" height="350px">
+    <div class="col-lg-6" style="border: rgba(228, 18, 200, 0.158) solid 0.5px;border-radius:5% ;" *ngIf="oneproduct">
+        <div class="card-body">
+            <h5 class="card-title"><span style="font-weight:bold;color: rgb(40, 96, 144);">Name:</span>
+                {{oneproduct.name}} </h5>
+            <p class="card-text"><span style="font-weight:bold;color: rgb(40, 96, 144);">Desc:</span>{{oneproduct.desc}}
+            </p>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><span style="font-weight:bold;color: rgb(40, 96, 144);">Price:</span>
+                    {{oneproduct.price}} </li>
+                <li class="list-group-item"><span style="font-weight:bold;color: rgb(40, 96, 144);">Rating:</span>
+                    {{oneproduct.rating}} </li>
+                <li class="list-group-item"><span style="font-weight:bold;color: rgb(40, 96, 144);">Id:</span>
+                    {{oneproduct._id}} </li>
+                <li class="list-group-item"><span style="font-weight:bold;color: rgb(40, 96, 144);">subCate_Name:</span>
+                    {{oneproduct.subcategory.name}} </li>
+                <li class="list-group-item"> <span style="font-weight:bold;color: rgb(40, 96, 144);">Cate_Name:</span>
+                    {{sub?.category.name}} </li>
+                <li class="list-group-item"> <span style="font-weight:bold;color: rgb(40, 96, 144);">cate_Id:</span>
+                    {{oneproduct.subcategory.category}} </li>
+                <li class="list-group-item"><span style="font-weight:bold;color: rgb(40, 96, 144);">subCate_Id:</span>
+                    {{oneproduct.subcategory._id}} </li>
+            </ul>
+            <input type="button" *ngIf="!user.currentUser()?.isadmin" name="buy" [ngModel]="btnValue" #buy="ngModel"
+                class="btn btn-primary" (click)="buyFun()">
+        </div>
+    </div>
+</div>
+<h2 style="color: rgb(40, 96, 144);">related Product</h2>
+<div class="row">
+    <div *ngFor="let product of products">
+        <div *ngIf="product.subcategory._id==oneproduct.ids">
+            <div class="card col-lg-3"
+                style="border: rgba(228, 18, 200, 0.158) solid 0.5px;height: 400px;width: 30%;margin: 10px;border-radius:5% ;">
+                <img src="{{product.image}}" class="card-img-top" alt="..." width="30%" height="100px">
+                <div class="card-body">
+                    <p class="card-title"><span style="font-weight:bold;color: rgb(40, 96, 144);">Name:</span>
+                        {{product.name}} </p>
+                    <p class="card-text"><span
+                            style="font-weight:bold;color: rgb(40, 96, 144);">Desc:</span>{{product.desc|summery:75}}
+                    </p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><span
+                                style="font-weight:bold;color: rgb(40, 96, 144);">Price:</span>
+                            {{product.price}} </li>
+                        <li class="list-group-item"><span
+                                style="font-weight:bold;color: rgb(40, 96, 144);">Rating:</span>
+                            {{product.rating}} </li>
+                        <li class="list-group-item"><span
+                                style="font-weight:bold;color: rgb(40, 96, 144);">subCate_Name:</span>
+                            {{product.subcategory.name}} </li>
+                    </ul>
+                </div>
+                <input [routerLink]="['/product-details',product._id,product.subcategory._id] " type="button"
+                    value="See More" class="btn btn-primary" (click)="setFun()">
+            </div>
+        </div>
+    </div>
+</div>

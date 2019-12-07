@@ -1,0 +1,10 @@
+<form #f="ngForm" (ngSubmit)="signIn(f.value)">
+    <div *ngIf="isnotvalid" style="background-color:firebrick;">Wrong E-mail or Password</div>
+    <label>E-mail</label>
+    <input type="email" required name="email" ngModel class="form-control" placeholder="ashraf@example.com"
+        #email="ngModel">
+    <label>Password</label>
+    <input type="password" required class="form-control" placeholder="password plz ^_^" ngModel name="password"
+        #password="ngModel">
+    <input [disabled]="f.invalid" type="submit" value="signIn" class="btn btn-primary">
+</form>
